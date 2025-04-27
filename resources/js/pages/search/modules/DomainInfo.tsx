@@ -4,7 +4,11 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { numberFormat } from '@/lib/utils';
 import { useSearchContext } from '../context';
 
-const formatDomainHostNames = (domainHostNames: string[]) => {
+const formatDomainHostNames = (domainHostNames: string[] | null) => {
+    if (!domainHostNames || domainHostNames.length === 0) {
+        return 'N/A';
+    }
+
     const joinedHostNames = domainHostNames.join(', ');
 
     let parsed = joinedHostNames.substring(0, 25);
@@ -53,16 +57,20 @@ export function DomainInfo() {
                             <TableCell>{domainExpiresDate}</TableCell>
                             <TableCell>{formattedEstimatedDomainAge}</TableCell>
                             <TableCell>
-                                <HoverCard>
-                                    <HoverCardTrigger className="cursor-help">{formattedDomainHostNames}</HoverCardTrigger>
-                                    <HoverCardContent className="w-auto text-sm">
-                                        <ul>
-                                            {domainHostNames.map((hostName, index) => (
-                                                <li key={index}>{hostName}</li>
-                                            ))}
-                                        </ul>
-                                    </HoverCardContent>
-                                </HoverCard>
+                                {domainHostNames ? (
+                                    <HoverCard>
+                                        <HoverCardTrigger className="cursor-help">{formattedDomainHostNames}</HoverCardTrigger>
+                                        <HoverCardContent className="w-auto text-sm">
+                                            <ul>
+                                                {domainHostNames.map((hostName, index) => (
+                                                    <li key={index}>{hostName}</li>
+                                                ))}
+                                            </ul>
+                                        </HoverCardContent>
+                                    </HoverCard>
+                                ) : (
+                                    formattedDomainHostNames
+                                )}
                             </TableCell>
                         </TableRow>
                     </TableBody>

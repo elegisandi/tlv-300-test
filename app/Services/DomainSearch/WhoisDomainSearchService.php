@@ -43,23 +43,17 @@ class WhoisDomainSearchService implements DomainSearchInterface
             $this->parseResponse($result, 'registrarName'),
             $this->parseResponse($result, 'createdDate'),
             $this->parseResponse($result, 'expiresDate'),
-            $this->parseResponse($result, 'estimatedDomainAge', false),
+            $this->parseResponse($result, 'estimatedDomainAge'),
             $this->parseResponse($result, 'nameServers.hostNames'),
-            $this->parseResponse($result, 'registrant.name', false),
-            $this->parseResponse($result, 'technicalContact.name', false),
-            $this->parseResponse($result, 'administrativeContact.name', false),
-            $this->parseResponse($result, 'contactEmail', false),
+            $this->parseResponse($result, 'registrant.name'),
+            $this->parseResponse($result, 'technicalContact.name'),
+            $this->parseResponse($result, 'administrativeContact.name'),
+            $this->parseResponse($result, 'contactEmail'),
         );
     }
 
-    private function parseResponse(array $result, string $key, bool $fallbackRegistryData = true): mixed
+    private function parseResponse(array $result, string $key): mixed
     {
-        $value = data_get($result, $key);
-
-        if (empty($value) && $fallbackRegistryData) {
-            $value = data_get($result, "registryData.$key");
-        }
-
-        return $value;
+        return data_get($result, $key, data_get($result, "registryData.$key"));
     }
 }

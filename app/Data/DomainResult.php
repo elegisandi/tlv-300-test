@@ -12,7 +12,7 @@ class DomainResult extends Data
         public string $domainCreatedDate,
         public string $domainExpiresDate,
         public int $domainEstimatedAge,
-        public array $domainHostNames,
+        public ?array $domainHostNames,
         public ?string $contactRegistrantName,
         public ?string $contactTechnicalName,
         public ?string $contactAdministrativeName,
