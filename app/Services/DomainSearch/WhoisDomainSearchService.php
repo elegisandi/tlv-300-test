@@ -54,6 +54,8 @@ class WhoisDomainSearchService implements DomainSearchInterface
 
     private function parseResponse(array $result, string $key): mixed
     {
+        // get the value from root level (whoisrecord) first
+        // if not found, try to get it from registryData
         return data_get($result, $key, data_get($result, "registryData.$key"));
     }
 }
