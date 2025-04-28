@@ -5,7 +5,7 @@ declare namespace App.Data {
         domainCreatedDate: string;
         domainExpiresDate: string;
         domainEstimatedAge: number;
-        domainHostNames: Array<any> | null;
+        domainHostNames: Array<string> | null;
         contactRegistrantName: string | null;
         contactTechnicalName: string | null;
         contactAdministrativeName: string | null;
